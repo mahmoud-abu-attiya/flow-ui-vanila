@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8" />
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>Document</title>
+      <link
+         href="https://cdn.jsdelivr.net/gh/hung1001/font-awesome-pro@4cac1a6/css/all.css"
+         rel="stylesheet"
+         type="text/css"
+      />
+      <link rel="stylesheet" href="styles/style.css" />
+      <link
+         rel="stylesheet"
+         href="https://unpkg.com/flowbite@1.5.5/dist/flowbite.min.css"
+      />
+      <script src="https://cdn.tailwindcss.com"></script>
+
+      <script>
+         tailwind.config = {
+            theme: {
+               extend: {
+                  colors: {
+                     pri: "#2663DF",
+                  },
+                  container: {
+                     center: true,
+                     padding: "1rem",
+                  },
+               },
+            },
+         };
+      </script>
+   </head>
+   <body>
+      <div class="container">
+         <section
+            class="bg-gray-100/50 md:bg-gray-100 grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 p-4 sm:p-10 rounded-xl min-h-[95vh] md:min-h-fit max-w-screen-lg"
+         >
+            <div class="img-container rounded-lg overflow-hidden">
+               <img
+                  src="/images/login.svg"
+                  alt="hero"
+                  class="w-full h-full object-cover"
+               />
+            </div>
+            <div class="flex flex-col justify-center text-center md:text-start">
+               <h1 class="text-3xl md:text-5xl font-bold mb-4">Successfully logged in</h1>
+               <a href="#" class="text-base md:text-xl text-gray-700 underline break-words email">
+                  email
+               </a>
+            </div>
+         </section>
+         <script src="scripts/email.js"></script>
+      </div>
+   </body>
+</html>
