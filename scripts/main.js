@@ -1,23 +1,22 @@
 let usernameValidations = true;
 let emailValidations = true;
-let passwordValidations = true;
 let matchPassword = true;
 let loading = false;
 let seePassword = false;
 
-let form = document.getElementById("signupForm");
-let usernameErr = document.querySelector(".usernameErr");
-let emailErr = document.querySelector(".emailErr");
-let passwordErr = document.querySelector(".passwordErr");
-let matchErr = document.querySelector(".matchErr");
-let loadingEl = document.querySelector(".loading");
-let seePasswordEl = document.querySelector(".seePassword");
-let password = document.getElementById("password");
-let password_confirmation = document.getElementById("password_confirmation");
-let username = document.getElementById("username");
-let email = document.getElementById("email");
-let formBtnText = document.querySelector("#signupForm button[type='submit'] .text");
-let eye = document.querySelector(".eye");
+const form = document.getElementById("signupForm");
+const usernameErr = document.querySelector(".usernameErr");
+const emailErr = document.querySelector(".emailErr");
+const passwordErr = document.querySelector(".passwordErr");
+const matchErr = document.querySelector(".matchErr");
+const loadingEl = document.querySelector(".loading");
+const seePasswordEl = document.querySelector(".seePassword");
+const password = document.getElementById("password");
+const password_confirmation = document.getElementById("password_confirmation");
+const username = document.getElementById("username");
+const email = document.getElementById("email");
+const formBtnText = document.querySelector("#signupForm button[type='submit'] .text");
+const eye = document.querySelector(".eye");
 
 const seePasswordToggle = () => {
    let password = document.getElementById("password");
@@ -44,10 +43,11 @@ const emailError = () => {
    emailErr.classList.remove("hidden");
    email.classList.add("border-red-500");
 };
-const passwordError = () => {
+const passwordError = (messages) => {
    passwordErr.classList.remove("hidden");
    password.classList.add("border-red-500");
    password_confirmation.classList.add("border-red-500");
+   passwordErr.innerHTML += `<span class="block">${messages}</span>`;
 };
 const matchError = () => {
    matchErr.classList.remove("hidden");
@@ -58,9 +58,17 @@ const setLoading = () => {
    loadingEl.classList.remove("hidden");
    formBtnText.classList.add("hidden");
 };
-const removeLoading = () => {
+const stopLoading = () => {
    loadingEl.classList.add("hidden");
    formBtnText.classList.remove("hidden");
+};
+const passwordErrorMassages = (errors) => {
+   errors.forEach((error) => {
+      passwordError(error);
+   });
+   password.classList.add("border-red-500");
+   password_confirmation.classList.add("border-red-500");
+   stopLoading();
 };
 
 form.onsubmit = (e) => {
@@ -73,7 +81,7 @@ form.onsubmit = (e) => {
    if (loading) {
       setLoading();
    } else {
-      removeLoading();
+      stopLoading();
    }
 
    // validate username
@@ -85,9 +93,6 @@ form.onsubmit = (e) => {
    emailValidations = emailRegex.test(data.email);
 
    // validate password
-   let passwordRegex =
-      /(?=(.*[0-9]))(?=.*[\!@#$%^&*()\\[\]{}\-_+=~`|:;"'<>,./?])(?=.*[a-z])(?=(.*[A-Z]))(?=(.*)).{8,}/;
-   passwordValidations = passwordRegex.test(data.password);
    if (data.password !== data.password_confirmation) {
       matchPassword = false;
       loading = false;
@@ -99,19 +104,15 @@ form.onsubmit = (e) => {
    switch (false) {
       case usernameValidations:
          usernameError();
-         removeLoading();
+         stopLoading();
          break;
       case emailValidations:
          emailError();
-         removeLoading();
-         break;
-      case passwordValidations:
-         passwordError();
-         removeLoading();
+         stopLoading();
          break;
       case matchPassword:
          matchError();
-         removeLoading();
+         stopLoading();
          break;
       default:
          break;
@@ -120,21 +121,27 @@ form.onsubmit = (e) => {
    if (
       usernameValidations &&
       emailValidations &&
-      passwordValidations &&
       data.password === data.password_confirmation
    ) {
       fetch("https://goldblv.com/api/hiring/tasks/register", {
          method: "POST",
          headers: {
             "Content-Type": "application/json",
+            accept: "application/json",
          },
          body: JSON.stringify(data),
       })
          .then((response) => response.json())
          .then((data) => {
             console.log("Success:", data);
-            localStorage.setItem("email", data.email);
-            window.location.href = "/flow-ui-vanila/loggedin.html";
+
+            // password error from backend
+            if (data.errors?.password) {
+               passwordErrorMassages(data.errors.password);
+            } else {
+               localStorage.setItem("email", data.email);
+               window.location.href = "/flow-ui-vanila/loggedin.html";
+            }
          })
          .catch((error) => {
             console.error("Error:", error);
