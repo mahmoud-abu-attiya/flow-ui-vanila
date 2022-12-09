@@ -134,7 +134,7 @@ form.onsubmit = (e) => {
          .then((data) => {
             console.log("Success:", data);
             localStorage.setItem("email", data.email);
-            window.location.href = "/loggedin.html";
+            window.location.href = "./loggedin.html";
          })
          .catch((error) => {
             console.error("Error:", error);
