@@ -55,8 +55,8 @@
                <p class="text-base md:text-xl text-gray-700">
                   We’re glad you’re here! Sign up to start.
                </p>
-               <form id="signupForm">
-                  <div class="mb-6">
+                  <form id="signupForm">
+                  <div class="mb-6 form-control">
                      <div class="relative">
                         <div
                            class="inpIcon absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none"
@@ -72,13 +72,13 @@
                            required
                         />
                      </div>
-                     <p class="text-red-500 text-sm hidden usernameErr">
-                        Username must be between 5 and 15 characters and can
+                     <p class="text-red-500 text-sm hidden usernameErr error">
+                        <!-- Username must be between 5 and 15 characters and can
                         only contain letters and numbers and can not start or
-                        end with numbers.
+                        end with numbers. -->
                      </p>
                   </div>
-                  <div class="mb-6">
+                  <div class="mb-6 form-control">
                      <div class="relative">
                         <div
                            class="inpIcon absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none"
@@ -94,11 +94,11 @@
                            required
                         />
                      </div>
-                     <p class="text-red-500 text-sm hidden emailErr">
-                        Please enter a valid email address.
+                     <p class="text-red-500 text-sm hidden emailErr error">
+                        <!-- Please enter a valid email address. -->
                      </p>
                   </div>
-                  <div class="mb-6">
+                  <div class="mb-6 form-control">
                      <div class="relative mb-6">
                         <button
                            type="button"
@@ -137,13 +137,10 @@
                            required
                         />
                      </div>
-                     <p class="text-red-500 text-sm hidden matchErr">
-                        Passwords do not match.
+                     <p class="text-red-500 text-sm hidden matchErr error">
+                        <!-- Passwords do not match. -->
                      </p>
-                     <p class="text-red-500 text-sm hidden passwordErr">
-                        The Password must contain at least one uppercase,
-                        lowercase letter, number, symbol and minimum 8
-                        characters.
+                     <p class="text-red-500 text-sm hidden passwordErr error">
                      </p>
                   </div>
                   <button
