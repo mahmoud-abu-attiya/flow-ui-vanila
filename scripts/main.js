@@ -8,16 +8,17 @@ const form = document.getElementById("signupForm"),
    usernameErr = document.querySelector(".usernameErr"),
    emailErr = document.querySelector(".emailErr"),
    passwordErr = document.querySelector(".passwordErr"),
-   matchErr = document.querySelector(".matchErr"),
    loadingEl = document.querySelector(".loading"),
    seePasswordEl = document.querySelector(".seePassword"),
    password = document.getElementById("password"),
    password_confirmation = document.getElementById("password_confirmation"),
    username = document.getElementById("username"),
    email = document.getElementById("email"),
-   formBtnText = document.querySelector("#signupForm button[type='submit'] .text"),
+   formBtnText = document.querySelector(
+      "#signupForm button[type='submit'] .text"
+   ),
    eye = document.querySelector(".eye"),
-   errors = document.querySelectorAll(".error");
+   errorsEl = document.querySelectorAll(".error");
 
 const seePasswordToggle = () => {
    let password = document.getElementById("password");
@@ -36,27 +37,29 @@ const seePasswordToggle = () => {
       seePassword = true;
    }
 };
+const clearErrors = () => {
+   errorsEl.forEach((error) => {
+      error.innerHTML = "";
+   });
+};
 const usernameError = (massage) => {
+   clearErrors();
    usernameErr.classList.remove("hidden");
    username.classList.add("border-red-500");
    usernameErr.innerHTML += `<span class="block">${massage}</span>`;
 };
 const emailError = (massage) => {
+   clearErrors();
    emailErr.classList.remove("hidden");
    email.classList.add("border-red-500");
    emailErr.innerHTML += `<span class="block">${massage}</span>`;
 };
 const passwordError = (messages) => {
+   clearErrors();
    passwordErr.classList.remove("hidden");
    password.classList.add("border-red-500");
    password_confirmation.classList.add("border-red-500");
    passwordErr.innerHTML += `<span class="block">${messages}</span>`;
-};
-const matchError = (messages) => {
-   matchErr.classList.remove("hidden");
-   password_confirmation.classList.add("border-red-500");
-   password.classList.add("border-red-500");
-   matchErr.innerHTML += `<span class="block">${messages}</span>`;
 };
 const setLoading = () => {
    loadingEl.classList.remove("hidden");
@@ -75,6 +78,10 @@ const passwordErrorMassages = (errors) => {
    stopLoading();
 };
 const emailErrorMassages = (errors) => {
+   errorsEl.forEach((error) => {
+      error.innerHTML = "";
+      console.log(error.innerHTML);
+   });
    errors.forEach((error) => {
       emailError(error);
    });
@@ -103,7 +110,7 @@ form.onsubmit = (e) => {
    }
 
    // clear error messages
-   errors.forEach((error) => {
+   errorsEl.forEach((error) => {
       error.classList.add("hidden");
    });
    form.querySelectorAll("input").forEach((input) => {
@@ -135,11 +142,11 @@ form.onsubmit = (e) => {
          stopLoading();
          break;
       case emailValidations:
-         emailError("Please enter a valid email address.");
+         emailError(["Please enter a valid email address."]);
          stopLoading();
          break;
       case matchPassword:
-         matchError("Password and password confirmation must match.");
+         passwordError(["Password and password confirmation must match."]);
          stopLoading();
          break;
       default:
@@ -186,11 +193,9 @@ form.onsubmit = (e) => {
 
 form.querySelectorAll("input").forEach((input) => {
    input.oninput = () => {
-      input.classList.remove("border-red-500");
-      input
-         .closest(".form-control")
-         .querySelector(".error")
-         .classList.add("hidden");
+      errorsEl.forEach((error) => {
+         error.classList.add("hidden");
+      });
    };
 });
 
