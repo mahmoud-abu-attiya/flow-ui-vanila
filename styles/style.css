@@ -15,6 +15,10 @@ body {
 	position: relative;
 	min-height: 100vh;
 }
+.overlay{
+	z-index: -1;
+	background-color: rgba(245, 247, 255, 0.85);
+}
 .btn{
 	background-image: linear-gradient(113.87deg, #2663DF 14.81%, #758FF0 88.76%) !important;
 	box-shadow: 0px 6px 18px #9CADF2;
@@ -35,4 +39,10 @@ body {
 }
 section{
    margin: auto;
+}
+@media (max-width: 768px) {
+	.img-container{
+		aspect-ratio: 1/1;
+	}
+	
 }

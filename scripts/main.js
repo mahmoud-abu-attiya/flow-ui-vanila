@@ -1,25 +1,23 @@
-let usernameValidations = true;
-let emailValidations = true;
-let matchPassword = true;
-let loading = false;
-let seePassword = false;
+let usernameValidations = true,
+   emailValidations = true,
+   matchPassword = true,
+   loading = false,
+   seePassword = false;
 
-const form = document.getElementById("signupForm");
-const usernameErr = document.querySelector(".usernameErr");
-const emailErr = document.querySelector(".emailErr");
-const passwordErr = document.querySelector(".passwordErr");
-const matchErr = document.querySelector(".matchErr");
-const loadingEl = document.querySelector(".loading");
-const seePasswordEl = document.querySelector(".seePassword");
-const password = document.getElementById("password");
-const password_confirmation = document.getElementById("password_confirmation");
-const username = document.getElementById("username");
-const email = document.getElementById("email");
-const formBtnText = document.querySelector(
-   "#signupForm button[type='submit'] .text"
-);
-const eye = document.querySelector(".eye");
-const errors = document.querySelectorAll(".error");
+const form = document.getElementById("signupForm"),
+   usernameErr = document.querySelector(".usernameErr"),
+   emailErr = document.querySelector(".emailErr"),
+   passwordErr = document.querySelector(".passwordErr"),
+   matchErr = document.querySelector(".matchErr"),
+   loadingEl = document.querySelector(".loading"),
+   seePasswordEl = document.querySelector(".seePassword"),
+   password = document.getElementById("password"),
+   password_confirmation = document.getElementById("password_confirmation"),
+   username = document.getElementById("username"),
+   email = document.getElementById("email"),
+   formBtnText = document.querySelector("#signupForm button[type='submit'] .text"),
+   eye = document.querySelector(".eye"),
+   errors = document.querySelectorAll(".error");
 
 const seePasswordToggle = () => {
    let password = document.getElementById("password");
@@ -165,7 +163,7 @@ form.onsubmit = (e) => {
          .then((data) => {
             console.log("Success:", data);
 
-            // password error from backend
+            // handle backend errors
             if (data.errors?.password) {
                passwordErrorMassages(data.errors.password);
             } else if (data.errors?.email) {
@@ -189,7 +187,10 @@ form.onsubmit = (e) => {
 form.querySelectorAll("input").forEach((input) => {
    input.oninput = () => {
       input.classList.remove("border-red-500");
-      input.closest(".form-control").querySelector(".error").classList.add("hidden");
+      input
+         .closest(".form-control")
+         .querySelector(".error")
+         .classList.add("hidden");
    };
 });
 
